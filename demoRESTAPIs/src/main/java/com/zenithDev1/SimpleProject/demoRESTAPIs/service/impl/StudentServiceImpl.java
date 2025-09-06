@@ -5,6 +5,7 @@ import com.zenithDev1.SimpleProject.demoRESTAPIs.entity.Student;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.repository.StudentRepository;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +15,20 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<StudentDto> getAllStudents(){
         List<Student> students = studentRepository.findAll();
-        List<StudentDto> studentDtoList = students
-                .stream()
+        return students.stream()
                 .map(student -> new StudentDto(student.getId(), student.getName(), student.getEmail())).toList();
-        return studentDtoList;
+        // return studentDtoLis;
+    }
+
+    @Override
+    public StudentDto getStudentById(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Found NO Student with Id: "+id));
+        return modelMapper.map(student, StudentDto.class);
     }
 
 }
