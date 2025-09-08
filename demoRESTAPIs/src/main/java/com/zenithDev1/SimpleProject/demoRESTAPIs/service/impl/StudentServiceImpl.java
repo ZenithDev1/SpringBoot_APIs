@@ -8,6 +8,7 @@ import com.zenithDev1.SimpleProject.demoRESTAPIs.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -28,10 +29,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto getStudentById(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Found NO Student with Id: "+id));
+        Student student = studentRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Found NO Student with Id: "+id));
         return modelMapper.map(student, StudentDto.class);
     }
 
+    @Override
     public StudentDto createNewStudent(AddStudentRequestDto addStudentRequestDto) {
         Student newStudent = modelMapper.map(addStudentRequestDto, Student.class);
         Student student = studentRepository.save(newStudent);

@@ -11,16 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.tree.pattern.ParseTreePattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@AllArgsConstructor
 @RequiredArgsConstructor
+//@RequestMapping("/api/students")
 public class StudentController{
 
     private final StudentService studentService;
@@ -31,11 +28,12 @@ public class StudentController{
         return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudents()); //studentService.getAllStudents();
     }
 
-    @GetMapping("/students/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(studentService.getStudentById(id)); //studentService.getStudentById(id);
     }
 
+    @PostMapping("/students")
     public ResponseEntity<StudentDto> createNewStudent(@RequestBody AddStudentRequestDto addStudentRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createNewStudent(addStudentRequestDto));
     }
