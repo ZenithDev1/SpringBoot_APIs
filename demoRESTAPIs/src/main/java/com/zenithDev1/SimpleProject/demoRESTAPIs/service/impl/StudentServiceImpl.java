@@ -1,5 +1,6 @@
 package com.zenithDev1.SimpleProject.demoRESTAPIs.service.impl;
 
+import com.zenithDev1.SimpleProject.demoRESTAPIs.dto.AddStudentRequestDto;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.dto.StudentDto;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.entity.Student;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.repository.StudentRepository;
@@ -16,18 +17,24 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
+    //private final AddStudentRequestDto addStudentRequestDto;
 
     @Override
     public List<StudentDto> getAllStudents(){
         List<Student> students = studentRepository.findAll();
         return students.stream()
-                .map(student -> new StudentDto(student.getId(), student.getName(), student.getEmail())).toList();
-        // return studentDtoLis;
+                .map(student -> modelMapper.map(student, StudentDto.class)).toList();
     }
 
     @Override
     public StudentDto getStudentById(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Found NO Student with Id: "+id));
+        return modelMapper.map(student, StudentDto.class);
+    }
+
+    public StudentDto createNewStudent(AddStudentRequestDto addStudentRequestDto) {
+        Student newStudent = modelMapper.map(addStudentRequestDto, Student.class);
+        Student student = studentRepository.save(newStudent);
         return modelMapper.map(student, StudentDto.class);
     }
 
