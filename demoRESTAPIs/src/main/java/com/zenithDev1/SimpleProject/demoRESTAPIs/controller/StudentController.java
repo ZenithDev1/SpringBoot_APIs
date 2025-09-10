@@ -6,6 +6,7 @@ import com.zenithDev1.SimpleProject.demoRESTAPIs.dto.StudentDto;
 //import com.zenithDev1.SimpleProject.demoRESTAPIs.repository.StudentRepository;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.service.StudentService;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.service.impl.StudentServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.tree.pattern.ParseTreePattern;
@@ -35,7 +36,7 @@ public class StudentController{
     }
 
     @PostMapping("/students")
-    public ResponseEntity<StudentDto> createNewStudent(@RequestBody AddStudentRequestDto addStudentRequestDto){
+    public ResponseEntity<StudentDto> createNewStudent(@RequestBody @Valid AddStudentRequestDto addStudentRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createNewStudent(addStudentRequestDto));
     }
 
