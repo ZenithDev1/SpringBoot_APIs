@@ -2,14 +2,9 @@ package com.zenithDev1.SimpleProject.demoRESTAPIs.controller;
 
 import com.zenithDev1.SimpleProject.demoRESTAPIs.dto.AddStudentRequestDto;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.dto.StudentDto;
-//import com.zenithDev1.SimpleProject.demoRESTAPIs.entity.Student;  connection with entity and respository is not required here
-//import com.zenithDev1.SimpleProject.demoRESTAPIs.repository.StudentRepository;
 import com.zenithDev1.SimpleProject.demoRESTAPIs.service.StudentService;
-import com.zenithDev1.SimpleProject.demoRESTAPIs.service.impl.StudentServiceImpl;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.tree.pattern.ParseTreePattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +18,7 @@ import java.util.Map;
 public class StudentController{
 
     private final StudentService studentService;
-    
+
 
     @GetMapping("/students")
     public ResponseEntity<List<StudentDto>> getAllStudent(){
@@ -44,7 +39,7 @@ public class StudentController{
     public ResponseEntity<Void> deleteAStudent(@PathVariable Long id){
         studentService.deleteStudentById(id);
         return ResponseEntity.noContent().build();
-        //return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        // project by :- https://github.com/ZenithDev1
     }
 
     @PutMapping("/students/{id}")
